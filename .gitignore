@@ -25,7 +25,7 @@ dist-ssr/
 # Tauri / Rust
 # ============================
 src-tauri/target/
-src-tauri/*.lock
+!src-tauri/Cargo.lock
 
 # Build outputs
 src-tauri/bin/
