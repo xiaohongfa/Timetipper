@@ -156,11 +156,13 @@ export default function App() {
   }, [data.tasks, noticeId, expand])
 
   useEffect(() => {
+    setQuoteIndex(index => index % Math.max(quotes.length, 1))
     const interval = window.setInterval(() => setQuoteIndex(index => (index + 1) % Math.max(quotes.length, 1)), 15000)
     return () => window.clearInterval(interval)
   }, [quotes.length])
 
   useEffect(() => {
+    setQuoteIndex(0)
     if (!data.quoteSource) { setQuotes(defaultQuotes); setQuoteError(''); return }
     let cancelled = false
     const refresh = async () => {
@@ -169,7 +171,6 @@ export default function App() {
         if (cancelled) return
         const lines = content.split(/\r?\n/).map(line => line.trim()).filter(Boolean)
         setQuotes(lines.length ? lines : defaultQuotes)
-        setQuoteIndex(0)
         setQuoteError(lines.length ? '' : '文件没有非空行')
       } catch (reason) {
         if (!cancelled) setQuoteError(String(reason))
